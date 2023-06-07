@@ -200,6 +200,19 @@
             init();
             nowDate=new Date();
             setTitle();
+            
+            //좌측의  select 박스에도 현재 날짜 동기화 시키기 
+            sel_yy.value=nowDate.getFullYear();
+            sel_mm.value=nowDate.getMonth()+1;
+            
+            //createDate() 함수를 정의할때, select박스의 디자인텍스트
+            //가 넘어오는 것을 전제로 정의하는 바람에, 아래의 코드에서
+            //월을 매개변수값으로 넘길때는 select박스의 디자인 데이터를
+            //염두해두고 값을 넘겨야 한다..
+            createDate(nowDate.getMonth()+1);
+            sel_dd.value=nowDate.getDate();//현재 몇일인지..
+
+
         });
     </script>
 </head>
