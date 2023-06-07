@@ -22,6 +22,11 @@
             width:98%;
             margin-top:5px;
         }
+        #leftSide img{
+            width:98%;
+            height:100px;
+            margin-top: 5px;
+        }
         textarea{
             width:95%;
             height:150px;
@@ -59,9 +64,46 @@
         #rightSide select,#rightSide button{
             width:98%;
             margin-top:5px;
-        }
-        
+        }        
+        #rightSide img{
+            width:98%;
+            height:100px;
+            margin-top: 5px;
+        }    
     </style>
+    <script>
+        let sel_yy, sel_mm, sel_dd, sel_icon, pic, detail1; //좌측 입력 컴포넌트들
+        let sel_yy2, sel_mm2, sel_dd2, sel_icon2, pic2, detail2; //우측 입력컴포넌트들
+
+
+        //select 박스에 날짜 채워넣기
+        function initSel(){
+
+        }
+
+        function init(){
+            sel_yy=document.getElementById("sel_yy");
+            sel_mm=document.getElementById("sel_mm");
+            sel_dd=document.getElementById("sel_dd");
+            sel_icon=document.getElementById("sel_icon");
+            pic=document.getElementById("pic");
+
+            detail1=document.getElementById("detail1");
+            sel_yy2=document.getElementById("sel_yy2");
+            sel_mm2=document.getElementById("sel_mm2");
+            sel_dd2=document.getElementById("sel_dd2");
+            sel_icon2=document.getElementById("sel_icon2");
+            pic2=document.getElementById("pic2");
+            detail2=document.getElementById("detail2");
+
+
+            initSel();
+        }
+
+        addEventListener("load", function(){
+            init();
+        });
+    </script>
 </head>
 <body>
     <div id="wrapper">
@@ -79,6 +121,9 @@
             <select id="sel_icon">
                 <option value="">아이콘</option>
             </select>
+
+            <img id="pic">
+
             <textarea cols="13" rows="7" id="detail1"></textarea>
 
             <button>등록</button>
@@ -110,6 +155,9 @@
             <select id="sel_icon2">
                 <option value="">아이콘</option>
             </select>
+
+            <img id="pic2">
+
             <textarea cols="13" rows="7" id="detail2"></textarea>
 
             <button>수정</button>
