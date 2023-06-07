@@ -94,6 +94,9 @@
 
         let dayArray=["Sun","Mon","Tue","Wed","Thur","Fri","Sat"];
 
+        //42개의 박스를 제어하기 위한 배열 선언 
+        let dateBoxArray=[];
+
         //select 박스에 날짜 채워넣기
         //select_yy 매개변수 - 연도 출력 대상 select박스의 id를 넘기면 됨
         function initSel(select_yy, select_mm, select_icon){
@@ -224,9 +227,26 @@
         
         function createDateBox(){
             for(let a=0;a<6;a++){ //층수
+                //일차원 배열 준비 
+                let arr=new Array(7);
                 for(let i=0;i<7;i++){ //호수
                     //container, width, height, x, y, num, src, text
-                    new DateBox(content, 100, 100,i*100, a*100, 0, "" , "무");                        
+                    let box=new DateBox(content, 100, 100,i*100, a*100, 0, "" , "무");                        
+                    arr[i]=box;
+                }
+                dateBoxArray.push(arr);
+            }
+        }
+
+        //이미 생성되어진 박스들을 대상으로, 해당 박스의 날짜를 
+        //출력해주는 함수 
+        function printNum(){
+            let count=0;
+
+            for(let a=0;a<dateBoxArray.length;a++){ //층
+                for(let i=0; i<dateBoxArray[a].length;i++){
+                    dateBoxArray[a][i].span.innerText=count;
+                    count++;
                 }
             }
         }
