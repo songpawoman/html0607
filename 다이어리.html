@@ -97,6 +97,9 @@
         //42개의 박스를 제어하기 위한 배열 선언 
         let dateBoxArray=[];
 
+        //다이어리 내용담을 배열 
+        let diaryArray=[];
+
         //select 박스에 날짜 채워넣기
         //select_yy 매개변수 - 연도 출력 대상 select박스의 id를 넘기면 됨
         function initSel(select_yy, select_mm, select_icon){
@@ -209,6 +212,8 @@
         //그리고 제목도 변경해야 함... 
         //좌측 select 영역에도 동기화..
         function prev(){
+            removeData();
+
             let month=nowDate.getMonth(); //현재 월 구한다
             nowDate.setMonth(month-1);//다음달로 조작
             setTitle();
@@ -219,9 +224,12 @@
             createDate(sel_mm.value);
 
             printNum();
+            loadData();
         }
-
+        
         function next(){
+            removeData();
+
             let month=nowDate.getMonth(); //현재 월 구한다
             nowDate.setMonth(month+1);//다음달로 조작
             setTitle();
@@ -232,6 +240,7 @@
             createDate(sel_mm.value);
 
             printNum();
+            loadData();
         }
 
         //일요일~~ 토요일까지 7개의 박스 생성
@@ -247,7 +256,7 @@
                 let arr=new Array(7);
                 for(let i=0;i<7;i++){ //호수
                     //container, width, height, x, y, num, src, text
-                    let box=new DateBox(content, 100, 100,i*100, a*100, 0, "" , "무");                        
+                    let box=new DateBox(content, 100, 100,i*100, a*100, 0, "" , "");                        
                     arr[i]=box;
                 }
                 dateBoxArray.push(arr);
@@ -270,12 +279,82 @@
                     if(count>=startDay &&  n<lastDate ){
                         n++;
                         dateBoxArray[a][i].span.innerText=n;
+                        dateBoxArray[a][i].yy=nowDate.getFullYear();
+                        dateBoxArray[a][i].mm=nowDate.getMonth();
+                        dateBoxArray[a][i].dd=n;
+                        
                     }else{
-                        dateBoxArray[a][i].span.innerText="";
+                        dateBoxArray[a][i].span.innerText="";                        
                     }
                     count++;
                 }
             }
+        }
+        
+        //선택한 날짜의 내용을 우측영역에 출력하기
+        function getDetail(obj){
+            //다이어리 배열에 들어있는 데이터라면
+            for(let i=0;i<diaryArray.length;i++){
+                if(diaryArray[i].year == obj.yy && diaryArray[i].month ==obj.mm && diaryArray[i].date==obj.dd){
+                    console.log("내용있네요");
+                    break;
+                }
+            }
+            
+
+        }
+        
+        function removeData(){
+            for(let a=0;a<dateBoxArray.length;a++){
+                for(let i=0;i<dateBoxArray[a].length;i++){
+
+                    //내용 채우기
+                    dateBoxArray[a][i].detail.innerText="";
+
+                    //아이콘 채우기 
+                    dateBoxArray[a][i].icon.src="";
+                }
+            }
+
+        }
+
+        //다이어리 불러오기
+        function loadData(){
+            
+
+            for(let a=0;a<dateBoxArray.length;a++){
+                for(let i=0;i<dateBoxArray[a].length;i++){
+                    for(let k=0;k<diaryArray.length;k++){
+                        if(diaryArray[k].year==nowDate.getFullYear() && 
+                            diaryArray[k].month==nowDate.getMonth() &&
+                            diaryArray[k].date==dateBoxArray[a][i].dd){
+
+                                //내용 채우기
+                                dateBoxArray[a][i].detail.innerText=diaryArray[k].content;
+
+                                //아이콘 채우기 
+                                dateBoxArray[a][i].icon.src=diaryArray[k].icon;
+
+                        }                        
+                    }
+                }
+            }
+        }
+
+        //다이어리 등록하기
+        function regist(){
+            let json={
+                "year":nowDate.getFullYear(),
+                "month":nowDate.getMonth(),
+                "date":sel_dd.value, 
+                "icon":sel_icon.value,
+                "content":detail1.value
+            }
+            diaryArray.push(json);
+
+            //화면에 표현하기 
+            removeData();
+            loadData();
         }
 
         function init(){
@@ -342,9 +421,9 @@
 
             <img id="pic">
 
-            <textarea cols="13" rows="7" id="detail1"></textarea>
+            <textarea  id="detail1"></textarea>
 
-            <button>등록</button>
+            <button onClick="regist()">등록</button>
 
         </div>
 

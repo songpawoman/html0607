@@ -1,6 +1,6 @@
 /*날짜를 표현하는 박스정의*/
 class DateBox{
-    constructor(container, width, height, x, y, num, src, text){
+    constructor(container, width, height, x, y, dd, src, text){
         this.container=container;
         this.div;
         this.span; //날짜 숫자를 담을 컨테이너(위치를 지정하기 위함)
@@ -10,7 +10,10 @@ class DateBox{
         this.x=x;
         this.y=y;
         
-        this.num=num;//날짜 숫자 표기 
+        this.yy=0;
+        this.mm=0;
+        this.dd=parseInt(dd);//날짜 숫자 표기 
+
         this.icon;//아이콘 표기 
         this.src=src; //아이콘의 이미지 경로
         this.text=text;//상세내용
@@ -28,7 +31,7 @@ class DateBox{
         this.span.style.left=10+"px";
         this.span.style.top=10+"px";
         this.div.appendChild(this.span);
-        this.span.innerText=this.num;//날짜 텍스트적용
+        this.span.innerText=this.dd;//날짜 텍스트적용
 
         this.icon=document.createElement("img");
         this.icon.src=this.src;
@@ -55,5 +58,9 @@ class DateBox{
         this.div.appendChild(this.detail);
 
         this.container.appendChild(this.div);//날짜 사각형을 부착
+
+        this.div.addEventListener("click",()=>{
+            getDetail(this);            
+        });
     }    
 }
